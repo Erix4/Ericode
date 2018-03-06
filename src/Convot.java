@@ -41,7 +41,7 @@ class Convot {
                 Scanner scanner = new Scanner(System.in);
                 answer = scanner.nextLine();
                 //
-                if (!answer.equals("quit") && !answer.equals(qs.get(compare(qs, answer)))) {
+                if (!answer.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit") && !answer.equals(qs.get(compare(qs, answer)))) {
                     qs.add(answer);
                     //
                     System.out.println("What's the answer?");
@@ -70,18 +70,18 @@ class Convot {
             Scanner scanner = new Scanner(System.in);
             input = scanner.nextLine();
             //
-            while(!input.equals("quit")) {
+            while(!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
                 //
-                if(!input.equals("quit")) {
+                if(!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
                     c = compare(qs, input);
                     System.out.println(as.get(c));
                     //
-                    if (!(as.get(c) == qs.get(compare(qs, as.get(c))))) {
+                    if (!(as.get(c).equals(qs.get(compare(qs, as.get(c)))))) {
                         //
                         scanner = new Scanner(System.in);
                         input = scanner.nextLine();
                         //
-                        if (!input.equals("quit")) {
+                        if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
                             qs.add(as.get(c));
                             as.add(input);
                         }
@@ -104,21 +104,23 @@ class Convot {
             String c1 = "";
             String c2 = "";
             String fix = "";
+            String fix2 = "";
             Random r = new Random();
             //
-            c1 = qs.get(0);
+            c1 = qs.get(r.nextInt(as.size() + 1));
             System.out.println("c1: " + c1);
             //
-            for (int n = 0; n < 50; n++){
+            for (int n = 0; n < 500; n++){
                 c2 = as.get(compare(qs, c1));
                 System.out.println("c2: " + c2);
                 sleep(3000);
                 //
                 c1 = as.get(compare(qs, c2));
-                if (c1.equals(fix)){
+                if (c1.equals(fix) || c1.equals(fix2)){
                     c1 = as.get(r.nextInt(as.size() + 1));
                 }
                 fix = c1;
+                fix2 =fix;
                 System.out.println("c1: " + c1);
                 sleep(3000);
             }
@@ -228,6 +230,10 @@ class Convot {
                     val++;
                 }
             }
+            if(val == compare.size()){
+                val =+ 10;
+            }
+            //
             value.add(val);
             int b = 0;
             for (b = 0;b < sort.size() &&  val < value.get(sort.get(b)); b++){}
@@ -240,13 +246,20 @@ class Convot {
     //
     public static List<List<String>> rewrite(List<String> as, List<String> aas, Integer replace, String replacement){
         List<List<String>> combined = new ArrayList<>();
+        List<String[]> both = new ArrayList<>();
+        String[] each = new String[0];
+        //
+        for (int n = 0; n < aas.size(); n++){
+            each = aas.get(0).split(",");
+            both.add(each);
+        }
         //
         if (as.get(replace).equals(replacement)){
             //
-        }else if (aas.contains(replacement)){
+        }else if (both.contains(replace)){
             as.set(replace, replacement);
         }else{
-            aas.add(replacement);
+            aas.add(replacement + "," + replace);
         }
         //
         combined.add(as);
@@ -260,6 +273,22 @@ class Convot {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+    //
+    private static void trim(List<String> qs, List<String> as){
+        List<Integer> remove = new ArrayList<>();
+        String temp = "";
+        //
+        for(int n = 0; n < qs.size(); n++){
+            temp = qs.get(n);
+            qs.set(n, "");
+            if(qs.contains(temp)){
+                qs.remove(n);
+                as.remove(n);
+            }else{
+                qs.set(n, temp);
+            }
         }
     }
 }

@@ -130,7 +130,7 @@ class Convot {
     }
     //
     public static List<String> read() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\covs.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\test.txt"));
         List<String> covs = new ArrayList<>();
         String line = br.readLine();
         while(line != null){
@@ -141,7 +141,7 @@ class Convot {
     }
     //
     public static void write(List<String> covs) throws IOException {
-        BufferedWriter thingThatWrites = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\covs.txt"));
+        BufferedWriter thingThatWrites = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\test.txt"));
         covs.forEach(string ->{
             try {
                 thingThatWrites.write(string);
@@ -230,7 +230,7 @@ class Convot {
                     val++;
                 }
             }
-            if(val == compare.size()){
+            if(qs.get(n) == item){
                 val =+ 10;
             }
             //
@@ -249,17 +249,40 @@ class Convot {
         List<String[]> both = new ArrayList<>();
         String[] each = new String[0];
         //
+        //<editor-fold desc="Organize">
         for (int n = 0; n < aas.size(); n++){
             each = aas.get(0).split(",");
             both.add(each);
         }
         //
-        if (as.get(replace).equals(replacement)){
+        aas.add(replacement + "," + replace);
+        //
+        List<String[]> alters = new ArrayList<>();
+        List<Integer> value = new ArrayList<>();
+        for (int n = 0; n < aas.size(); n++){
+            if ((both.get(n)[1]).equals(replace)) {
+                if (alters.contains(both.get(n)[0])){
+                    for (int a = 0; alters.get(a)[0] != both.get(n)[0]; a++){
+                        value.set(Integer.parseInt(alters.get(a)[1]), value.get(Integer.parseInt(alters.get(a)[1]) + 1));
+                    }
+                }else {
+                    value.add(0);
+                    String[] use = new String[]{both.get(n)[0], Integer.toString(value.size())};
+                }
+            }
+        }
+        //</editor-fold>
+        //
+        List<String[]> sorted = new ArrayList<>();
+        for (int a = 0; a < alters.size(); a++) {
+            Integer b;
+            for (b = 0; b < sorted.size() && value.get(Integer.parseInt(alters.get(a)[1])) < Integer.parseInt(sorted.get(b)[1]); b++){}
             //
-        }else if (both.contains(replace)){
-            as.set(replace, replacement);
-        }else{
-            aas.add(replacement + "," + replace);
+            sorted.add(b, alters.get(a));
+        }
+        //
+        if(sorted.get(0)[0] != as.get(replace)){
+            as.set(replace, sorted.get(0)[0]);
         }
         //
         combined.add(as);

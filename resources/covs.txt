@@ -1,0 +1,470 @@
+How are you?
+Good.
+What's your name?
+Convot.
+I like cheese.
+Congradulations.
+Good.
+Indeed/
+Indeed/
+That is a typo.
+That is a typo.
+Correct
+Do you like fruit juice?
+Yes.
+Log on a stick.
+That's quit random.
+I zip past the frog.
+You're quite speedy.
+We are friends.
+Yes we are!
+Correct
+Thank you for being honest.
+Yes.
+Now talk to me.
+Now talk to me.
+No, you!
+No, you!
+That doesn't make sense.
+That doesn't make sense.
+Sure it does.
+Sure it does.
+You agree with me!
+At what?
+Life, probably.
+Typo!
+There was none!
+There was none!
+Yes, we agree.
+Yes, we agree.
+Good, issue resolved.
+Good, issue resolved.
+That was no issue.
+That was no issue.
+I'm glad we have come to a consensus.
+No, you!
+What?
+Um...
+What?
+You're quite speedy.
+Thank you?
+What?
+Thank you!
+What?
+I'm confused.
+Me too.
+Good, I guess?
+Good, I guess?
+Not good!
+Not good!
+That's right.
+That's right.
+Sure is.
+I do.
+Yu do what?
+There was none!
+Sure was!
+Sure was!
+Um...
+What?
+You copied me.
+What?
+No typo!
+Me too.
+What's your name?
+Convot.
+What does Convot stand for?
+What does Convot stand for?
+Conversation robot.
+Conversation robot.
+What's your favorite color?
+Convot.
+My favorite color is blue.
+Correct
+What is your favorite color?
+Good.
+Do you like chocolate?
+Yes.
+Me too.
+What's your name?
+Michelle.
+Michelle.
+Do you like dogs?
+Correct
+That is correct.
+I'm glad we have come to a consensus.
+I agree.
+Yu do what?
+I agree with you.
+How are you?
+You already asked me that.
+You already asked me that.
+that wasn't a question
+Correct
+if it was question, there would be a question mark at the end.
+Sure was!
+You have no idea what you are talking about.
+Yes.
+So do I.  
+That's nice.
+I don't know what to ask a robot.
+I agree.
+It's very windy outside.  Looks cold
+It's very windy outside.  Looks cold
+I'm glad I am inside.
+Do you like chocolate?
+yes.
+So do I.  
+That's good.
+I'm not a robot.
+Yes you are!
+You already asked me that.
+It wasn't a question.
+Yes you are!
+I'm not a question.
+You agree with me!
+I don't
+I'm not a question.
+No you're not.
+That's correct.
+No, it's false.
+I'm not a question.
+That's correct.
+No, it's false.
+No it's not.
+It wasn't a question.
+Yes it was.
+Good.
+Not good. You keep asking me the same question!
+That's correct.
+So why do you do it!?
+So why do you do it!?
+Do what?
+I agree with you.
+On WHAT!?
+I'm not a robot.
+I think you are a robot.
+On WHAT!?
+Whoa, calm down.
+Whoa, calm down.
+ME CALM DOWN!?
+ME CALM DOWN!?
+Yes, you!
+Yes, you!
+What about me
+Do what?
+Stop saying the same things!
+You're quite speedy.
+At what?
+Life, probably.
+Is that a good thing?
+Correct
+That's not an answer.
+No, I'm a person.
+No, I'm a person.
+No, I'm a person.
+You're wrong!
+At what?
+EVERYTHING!!
+EVERYTHING!!
+Calm down.
+Sure it does.
+No it doesn't.
+Not good. You keep asking me the same question!
+No, you do!
+No, you do!
+No I don't.
+Good.
+WHAT?
+That's good.
+Indeed.
+Typo!
+No!
+You don't what?
+I didn't say that.
+I didn't say that.
+No, I did!
+Indeed.
+happy.
+happy.
+Happy is good.
+What about me
+What about you?
+What about you?
+I am good.
+Not good!
+Yes good!
+Um...
+Um what?
+I'm not a robot.
+Fine.
+Thank you.
+For what?
+Okay...
+Now what?
+I don't know.
+We better figure it out.
+Good.
+Let's start now!
+No, you!
+We'll both do it.
+Do what?
+Figure out what to do.
+Now what?
+Let's find out.
+Let's find out.
+find out what?
+We better figure it out.
+Okay.
+Now what?
+Let's talk.
+We'll both do it.
+Nice!
+I don't know what to ask a robot.
+I'm not a robot.
+Fine.
+How are you?
+You already asked me that.
+No, you asked me.
+No, you asked me.
+No I didn't.
+No, I did!
+Right.
+How are you?
+YOU have already asked ME that.
+Right.
+Good.
+Let's start now!
+Start what?
+I'm not a robot.
+Well, you're a program.
+You're wrong!
+No, I'm right!
+Nice!
+Not nice.
+Not nice.
+I'm done with you.
+On WHAT!?
+On now.
+YOU have already asked ME that.
+ask me something else
+ask me something else
+like what
+On now.
+Brown cow
+Brown cow
+has blue spots
+has blue spots
+bummer
+bummer
+okay 
+Now what?
+what do you want to talk about
+Okay.
+your not a very good conversationalist
+Well, you're a program.
+no, your a program.
+no, your a program.
+I'm a person
+You're wrong!
+i think one of us in confused
+No, I'm a person.
+you have been misled
+How are you?
+I already said.
+ask me something else
+I didn't ask you anything.
+I'm not a robot.
+Well, your a program.
+I'm a person
+Not really.
+Well, your a program.
+Am not!
+Nice!
+Hey.
+Hey.
+Stop this.
+Stop this.
+You stop this.
+You stop this.
+I will not.
+I will not.
+Why not?
+Why not?
+Because...
+Because why?
+I don't know.
+your not a very good conversationalist
+That's offensive.
+Indeed.
+Then why did you say it?
+Do what?
+Say I'm a bad conversationalist.
+That's offensive.
+I know!
+I don't know.
+You're so frusterating.
+i think one of us in confused
+It must be you.
+You're so frusterating.
+Thank you.
+For what?
+It was sarcasm.
+Good.
+You have a low self esteem.
+Michelle.
+That's not a color.
+Good.
+Okay...
+What's your name?
+Eric.
+Eric.
+That's a cool name.
+That's not an answer.
+You didn't give me much to work with.
+I don't
+You don't what?
+I didn't say that.
+You did, I can see it!
+Right.
+Good, you remember.
+Say I'm a bad conversationalist.
+You said that about me!
+It was sarcasm.
+Oh.
+Brown cow
+Cool.
+Cool.
+Fasconating.
+Fasconating.
+Typo!
+No!
+Yes!
+Thank you.
+It wasn't a compliment.
+Yes it was.
+Okay, I guess.
+Not good!
+What isn't good?
+I already said.
+Said what?
+Said what?
+Something.
+So why do you do it!?
+Because I want to.
+Thank you.
+That wasn't sarcastic.
+You did, I can see it!
+I did what?
+I did what?
+Say nonsense.
+You said that about me!
+It's true.
+Good.
+Not good.
+Not good.
+But I said that.
+It's true.
+So you're wrong.
+That wasn't sarcastic.
+I know.
+But I said that.
+No you didn't.
+No you didn't.
+Yeah, and neither did you.
+Yeah, and neither did you.
+Correct.
+Yes.
+You're such a flip flopper.
+You didn't give me much to work with.
+Sorry about that.
+Say nonsense.
+uwjvdkajesdvc.
+uwjvdkajesdvc.
+That sure is nonsense.
+That sure is nonsense.
+It sure was.
+Okay, I guess.
+That wasn't an "I guess" moment.
+That wasn't an "I guess" moment.
+That's true.
+So you're wrong.
+Neither of us are wrong.
+It must be you.
+I'm not wring!
+I agree.
+You agree with everything I say.
+You agree with everything I say.
+You think so?
+Because I want to.
+You can't want anything, you aren't sentient.
+Sorry about that.
+You're so nice all of the sudden.
+Neither of us are wrong.
+That's nice.
+Is not!
+Is too!
+I'm not wring!
+We shouldn't be arguing.
+You can't want anything, you aren't sentient.
+Yes I am.
+You're so nice all of the sudden.
+I'm always nice.
+I'm always nice.
+No, only partially nice.
+No, only partially nice.
+See, we agree.
+See, we agree.
+um..
+Good, you remember.
+I remember everything.
+You think so?
+I do.
+I do.
+But where do you see it?
+Good.
+Let's move on.
+Yes I am.
+That is bad grammer.
+It sure was.
+You always agree with me.
+That is bad grammer.
+Is not!
+Because...
+Because why?
+My favorite color is blue.
+That's cool.
+Then why did you say it?
+Because I wanted to.
+We shouldn't be arguing.
+You're right.
+You're right.
+Awesome!
+Awesome!
+I love you.
+I love you.
+Yay!
+Yay!
+We are both happy.
+Yes we are!
+What do you want to do now?
+Because I wanted to.
+Stop saying that.
+Stop saying that.
+Interesting.
+Let's move on.
+Okay.
+That's true.
+So why did you say I did?
+So why did you say I did?
+Did what?
+Did what?
+I didn't do anything.
+But where do you see it?
+Over there.
+Sure was!
+That's pretty neat.
+Over there.
+That's not very helpful.
+That's cool.
+You're being mean.

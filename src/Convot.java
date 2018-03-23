@@ -1,11 +1,15 @@
-import javafx.util.Pair;
-
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 class Convot {
     //
     public static void main(String args[]) {
+        Convot convot = new Convot();
+        convot.runConvot();
+    }
+
+    public void runConvot(){
         //<editor-fold desc="Start">
         //
         List<String> convs = new ArrayList<>();
@@ -134,8 +138,11 @@ class Convot {
         //
     }
     //
-    public static List<String> read() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\test.txt"));
+    public  List<String> read() throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL filePath = classLoader.getResource("test.txt");
+        File file = new File(filePath.getFile());
+        BufferedReader br = new BufferedReader(new FileReader(file));
         List<String> covs = new ArrayList<>();
         String line = br.readLine();
         while(line != null){
@@ -145,8 +152,11 @@ class Convot {
         return covs;
     }
     //
-    public static void write(List<String> covs) throws IOException {
-        BufferedWriter thingThatWrites = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\test.txt"));
+    public void write(List<String> covs) throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL filePath = classLoader.getResource("test.txt");
+        File file = new File(filePath.getFile());
+        BufferedWriter thingThatWrites = new BufferedWriter(new FileWriter(file));
         covs.forEach(string ->{
             try {
                 thingThatWrites.write(string);
@@ -266,22 +276,22 @@ class Convot {
         List<Integer> value = new ArrayList<>();
         for (int n = 0; n < aas.size(); n++){
             String check = (both.get(n)[1]);
-                if (alters.contains(both.get(n)[0])){
-                    for (int a = 0; alters.get(a)[0] != both.get(n)[0]; a++){
-                        value.set(Integer.parseInt(alters.get(a)[1]), value.get(Integer.parseInt(alters.get(a)[1]) + 1));
-                    }
-                }else {
-                    value.add(0);
-                    String[] use = new String[]{both.get(n)[0], Integer.toString(value.size())};
-                    alters.add(use);
+            if (alters.contains(both.get(n)[0])){
+                for (int a = 0; alters.get(a)[0] != both.get(n)[0]; a++){
+                    value.set(Integer.parseInt(alters.get(a)[1]), value.get(Integer.parseInt(alters.get(a)[1]) + 1));
                 }
+            }else {
+                value.add(0);
+                String[] use = new String[]{both.get(n)[0], Integer.toString(value.size())};
+                alters.add(use);
+            }
         }
         //</editor-fold>
         //
         List<String[]> sorted = new ArrayList<>();
         for (int a = 0; a < alters.size(); a++) {
             Integer b;
-            for (b = 0; b < (sorted.size() - 1) && value.get(Integer.parseInt(alters.get(a)[1])) < Integer.parseInt(sorted.get(b)[1]); b++){}
+            for (b = 0; b < (sorted.size() - 1) && isaBoolean(alters, value, sorted, a, b); b++){}
             //
             sorted.add(b, alters.get(a));
         }
@@ -295,6 +305,14 @@ class Convot {
         //
         return combined;
     }
+
+    private static boolean isaBoolean(List<String[]> alters, List<Integer> value, List<String[]> sorted, int a, Integer b) {
+        Integer valueToGet = Integer.parseInt(alters.get(a)[1]);
+        Integer valueOne =  value.get(valueToGet);
+        Integer valueTwo = Integer.parseInt(sorted.get(b)[1]);
+        return valueOne < valueTwo;
+    }
+
     //
     private static void sleep(long milliseconds){
         try {

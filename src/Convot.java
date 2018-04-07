@@ -12,9 +12,12 @@ class Convot {
         List<String> qs = new ArrayList<>();
         List<String> as = new ArrayList<>();
         List<String> aas = new ArrayList<>();
+        List<List<String>> read = new ArrayList<>();
         //
         try {
-            convs = read();
+            read = read();
+            convs = read.get(0);
+            aas = read.get(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -134,7 +137,9 @@ class Convot {
         //
     }
     //
-    public static List<String> read() throws IOException {
+    public static List<List<String>> read() throws IOException {
+        List<List<String>> combined = new ArrayList<>();
+        //
         BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\test.txt"));
         List<String> covs = new ArrayList<>();
         String line = br.readLine();
@@ -142,7 +147,18 @@ class Convot {
             covs.add(line);
             line = br.readLine();
         }
-        return covs;
+        combined.add(covs);
+        //
+        br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\test.txt"));
+        List<String> aas = new ArrayList<>();
+        line = br.readLine();
+        while(line != null){
+            covs.add(line);
+            line = br.readLine();
+        }
+        combined.add(aas);
+        //
+        return combined;
     }
     //
     public static void write(List<String> covs) throws IOException {
@@ -268,7 +284,7 @@ class Convot {
             String check = (both.get(n)[1]);
                 if (alters.contains(both.get(n)[0])){
                     for (int a = 0; alters.get(a)[0] != both.get(n)[0]; a++){
-                        value.set(Integer.parseInt(alters.get(a)[1]), value.get(Integer.parseInt(alters.get(a)[1]) + 1));
+                        value.set(Integer.parseInt(alters.get(a)[1]), value.get(Integer.parseInt(alters.get(a)[1])) + 1);
                     }
                 }else {
                     value.add(0);
@@ -281,7 +297,7 @@ class Convot {
         List<String[]> sorted = new ArrayList<>();
         for (int a = 0; a < alters.size(); a++) {
             Integer b;
-            for (b = 0; b < (sorted.size() - 1) && value.get(Integer.parseInt(alters.get(a)[1])) < Integer.parseInt(sorted.get(b)[1]); b++){}
+            for (b = 0; b < (sorted.size()) && value.get(Integer.parseInt(alters.get(a)[1])) < Integer.parseInt(sorted.get(b)[1]); b++){}
             //
             sorted.add(b, alters.get(a));
         }

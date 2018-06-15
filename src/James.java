@@ -17,13 +17,13 @@ public class James {
             //
             Random randy = new Random();
             //
-            for (int n = 0; n < 6; n++){
+            for (int n = 0; n < 12; n++){
                 weights.add(randy.nextDouble());
             }
             //
             System.out.println("Enter random numbers, 0 or 1");
             Scanner scanner = new Scanner(System.in);
-            for (int n = 0; n < 2; n++) {
+            for (int n = 0; n < 3; n++) {
                 input1 = scanner.nextLine();
                 if (input1.equals("0") || input1.equals("1")) {
                     numbers.add(Integer.parseInt(input1));
@@ -34,7 +34,7 @@ public class James {
             //
             System.out.println("I will now try to guess your input");
             System.out.println("Enter score at any time for the score");
-            for(int n = 0; n < 50; n++) {
+            for(int n = 0; n < 100; n++) {
                     imperfectGuess = guess(numbers, weights);
                     if (imperfectGuess > 0){
                         guess = 1;
@@ -42,7 +42,7 @@ public class James {
                         guess = 0;
                     }
                     //
-                    input1 = scanner.nextLine();
+                    input1 = scanner.next();
                     //
                     if (input1.equals("0") || input1.equals("1") || input1.equals("score")) {
                         if (input1.equals("score")){
@@ -52,15 +52,15 @@ public class James {
                             System.out.println(holdString.get(2));
                         }else {
                             //
-                            System.out.println(guess + ", " + imperfectGuess);
+                            System.out.print(guess);// + ", " + imperfectGuess);
                             //
                             if (input1.equals(Integer.toString(guess))) {
                                 jamesScore++;
-                                System.out.println("I win!");
+                                System.out.println(", I win!");
                             } else {
                                 playerScore++;
-                                System.out.println("You win!");
-                                weights = train(numbers, weights, Integer.parseInt(input1));
+                                System.out.println(", You win!");
+                                weights = train(numbers, weights, Integer.parseInt(input1) * 2 - 1);
                                 numbers.add(Integer.parseInt(input1));
                             }
                         }
@@ -81,44 +81,58 @@ public class James {
             Double LR = 1.0;
             errors.add(0.0);
             errors.add(0.0);
-            //
+            errors.add(0.0);
+            /*
+            inputs.add(numbers.get(numbers.size() - 2) * 2 - 1);
+            inputs.add(numbers.get(numbers.size() - 1) * 2 - 1);
+            */
+            //<editor-fold desc="Test">
+            inputs.add(numbers.get(numbers.size() - 3) * 2 - 1);
             inputs.add(numbers.get(numbers.size() - 2) * 2 - 1);
             inputs.add(numbers.get(numbers.size() - 1) * 2 - 1);
             //
-            //<editor-fold desc="Test">
-            neurons.add(constrain((inputs.get(0) * weights.get(0)) + (inputs.get(1) * weights.get(1))));
-            neurons.add(constrain((inputs.get(0) * weights.get(2)) + (inputs.get(1) * weights.get(3))));
+            neurons.add(constrain((inputs.get(0) * weights.get(0)) + (inputs.get(1) * weights.get(1)) + inputs.get(2) * weights.get(2)));
+            neurons.add(constrain((inputs.get(0) * weights.get(3)) + (inputs.get(1) * weights.get(4)) + inputs.get(2) * weights.get(5)));
+            neurons.add(constrain((inputs.get(0) * weights.get(6)) + (inputs.get(1) * weights.get(7)) + inputs.get(2) * weights.get(8)));
             //
-            Double output = (neurons.get(0) * weights.get(4)) + neurons.get(1) * weights.get(5);
+            Double output = (neurons.get(0) * weights.get(9)) + (neurons.get(1) * weights.get(10)) + (neurons.get(2) * weights.get(11));
             //
             output = constrain(output);
             //
             //System.out.print(output);
             //
             //Double error = inputs.get(0) - (output * derivative(output));
-            Double error = (answer - output) * derivative(output);
+            Double error = (answer - output);// * derivative(output);
             //
             //System.out.println(", " + error);
             //</editor-fold>
             //
             while (Math.abs(error) > .001) {
                 //
-                weights.set(4, weights.get(4) + (LR * error * neurons.get(0)));
-                weights.set(5, weights.get(5) + (LR * error * neurons.get(1)));
+                weights.set(9, weights.get(9) + (LR * error * neurons.get(0)));
+                weights.set(10, weights.get(10) + (LR * error * neurons.get(1)));
+                weights.set(11, weights.get(11) + (LR * error * neurons.get(2)));
                 //
-                errors.set(0, LR * weights.get(4) * error * derivative(neurons.get(0)));
-                errors.set(1, LR * weights.get(5) * error * derivative(neurons.get(1)));
+                errors.set(0, LR * weights.get(9) * error * derivative(neurons.get(0)));
+                errors.set(1, LR * weights.get(10) * error * derivative(neurons.get(1)));
+                errors.set(2, LR * weights.get(11) * error * derivative(neurons.get(2)));
                 //
                 weights.set(0, weights.get(0) + (LR * errors.get(0) * inputs.get(0)));
                 weights.set(1, weights.get(1) + (LR * errors.get(0) * inputs.get(1)));
-                weights.set(2, weights.get(2) + (LR * errors.get(1) * inputs.get(0)));
-                weights.set(3, weights.get(3) + (LR * errors.get(1) * inputs.get(1)));
+                weights.set(2, weights.get(2) + (LR * errors.get(0) * inputs.get(2)));
+                weights.set(3, weights.get(3) + (LR * errors.get(1) * inputs.get(0)));
+                weights.set(4, weights.get(4) + (LR * errors.get(1) * inputs.get(1)));
+                weights.set(5, weights.get(5) + (LR * errors.get(1) * inputs.get(2)));
+                weights.set(6, weights.get(6) + (LR * errors.get(2) * inputs.get(0)));
+                weights.set(7, weights.get(7) + (LR * errors.get(2) * inputs.get(1)));
+                weights.set(8, weights.get(8) + (LR * errors.get(2) * inputs.get(2)));
                 //
                 //<editor-fold desc="Test">
-                neurons.set(0, constrain((inputs.get(0) * weights.get(0)) + (inputs.get(1) * weights.get(1))));
-                neurons.set(1, constrain((inputs.get(0) * weights.get(2)) + (inputs.get(1) * weights.get(3))));
+                neurons.add(constrain((inputs.get(0) * weights.get(0)) + (inputs.get(1) * weights.get(1)) + inputs.get(2) * weights.get(2)));
+                neurons.add(constrain((inputs.get(0) * weights.get(3)) + (inputs.get(1) * weights.get(4)) + inputs.get(2) * weights.get(5)));
+                neurons.add(constrain((inputs.get(0) * weights.get(6)) + (inputs.get(1) * weights.get(7)) + inputs.get(2) * weights.get(8)));
                 //
-                output = (neurons.get(0) * weights.get(4)) + neurons.get(1) * weights.get(5);
+                output = (neurons.get(0) * weights.get(9)) + (neurons.get(1) * weights.get(10)) + (neurons.get(2) * weights.get(11));
                 //
                 output = constrain(output);
                 //
@@ -127,9 +141,7 @@ public class James {
                 if (catchError.equals(output)){
                     System.out.print("Error found. Time buffer...");
                     sleep(3000);
-                }
-                //
-                if (catchCatchError.equals(output)){
+                }else if (catchCatchError.equals(output)){
                     System.out.print("Secondary error found. Time buffer...");
                     LR = LR * .5;
                     sleep(3000);
@@ -141,7 +153,7 @@ public class James {
                 //
                 //System.out.println(derivative(output));
                 //
-                error = LR * (answer - output) * derivative(output);
+                error = LR * (answer - output);// * derivative(output);
                 //
                 //System.out.println(", " + error);
                 //</editor-fold>
@@ -168,13 +180,15 @@ public class James {
         List<Integer> inputs = new ArrayList<>();
         List<Double> neurons = new ArrayList<>();
         //
-        inputs.add(number.get(number.size() - 2));
-        inputs.add(number.get(number.size() - 1));
+        inputs.add(number.get(number.size() - 3) * 2 - 1);
+        inputs.add(number.get(number.size() - 2) * 2 - 1);
+        inputs.add(number.get(number.size() - 1) * 2 - 1);
         //
-        neurons.add(constrain((inputs.get(0) * weights.get(0)) + (inputs.get(1) * weights.get(1))));
-        neurons.add(constrain((inputs.get(0) * weights.get(2)) + (inputs.get(1) * weights.get(3))));
+        neurons.add(constrain((inputs.get(0) * weights.get(0)) + (inputs.get(1) * weights.get(1)) + inputs.get(2) * weights.get(2)));
+        neurons.add(constrain((inputs.get(0) * weights.get(3)) + (inputs.get(1) * weights.get(4)) + inputs.get(2) * weights.get(5)));
+        neurons.add(constrain((inputs.get(0) * weights.get(6)) + (inputs.get(1) * weights.get(7)) + inputs.get(2) * weights.get(8)));
         //
-        Double output = (neurons.get(0) * weights.get(4)) + neurons.get(1) * weights.get(5);
+        Double output = (neurons.get(0) * weights.get(9)) + (neurons.get(1) * weights.get(10)) + (neurons.get(2) * weights.get(11));
         //
         output = constrain(output);
         //
@@ -199,32 +213,32 @@ public class James {
             player += "+";
         }
         //
-        for (int n = 0; n < 10 - playerScore; n++){
+        for (int n = 0; n < jamesScore - playerScore; n++){
             player += "0";
         }
-        //
+        /*
         if(jamesScore > 10 && jamesScore > playerScore){
             for (int n = 0; n < jamesScore - 10; n++){
                 player += "0";
             }
         }
-        //
+        */
         build.add(player);
         //
         for (int n = 0; n < jamesScore; n++){
             james += "+";
         }
         //
-        for (int n = 0; n < 10 - jamesScore; n++){
+        for (int n = 0; n < playerScore - jamesScore; n++){
             james += "0";
         }
-        //
+        /*
         if(playerScore > 10 && playerScore > jamesScore){
             for (int n = 0; n < playerScore - 10; n++){
                 james += "0";
             }
         }
-        //
+        */
         build.add(james);
         //
         stats = playerScore + " to " + jamesScore + ", ";

@@ -141,7 +141,8 @@ class Convot {
         //
     }
     //
-    public  List<String> read() throws IOException {
+    public  List<List<String>> read() throws IOException {
+        List<List<String>> combined = new ArrayList<>();
         ClassLoader classLoader = getClass().getClassLoader();
         URL filePath = classLoader.getResource("test.txt");
         File file = new File(filePath.getFile());

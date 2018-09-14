@@ -55,9 +55,11 @@ class APK {
         URL filePath = classLoader.getResource("apk.txt");
         File file = new File(filePath.getFile());
         BufferedReader br = new BufferedReader(new FileReader(file));
-        Integer count;
+        Integer count =0;
         String line = br.readLine();
-        count = Integer.parseInt(line);
+        if(line !=null) {
+            count = Integer.parseInt(line);
+        }
         //
         return count;
     }

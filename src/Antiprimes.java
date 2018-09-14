@@ -44,8 +44,8 @@ public class Antiprimes {
             //
             antiPrime++;
             //
-            Scanner scanner = new Scanner(System.in);
-            answer = scanner.nextLine();
+            //Scanner scanner = new Scanner(System.in);
+            //answer = scanner.nextLine();
         }
         //
         List<String> aPD = new ArrayList<String>();

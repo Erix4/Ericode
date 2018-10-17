@@ -1,8 +1,10 @@
+package Encoders;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Encoder {
+public class Shifter {
     public static void main(String args[]){
         List<Integer> numbers = new ArrayList<>();
         List<Character> characters = new ArrayList<>();
@@ -53,7 +55,7 @@ public class Encoder {
         String finale = d.toString();
         System.out.println(finale);
     }
-
+    //
     public static Integer constrain (Integer number){
         Integer constrained = 0;
         //

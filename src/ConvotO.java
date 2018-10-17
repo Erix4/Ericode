@@ -1,11 +1,14 @@
 import java.io.*;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
-class Convot {
+class ConvotO {
     //
     public static void main(String args[]) {
-        Convot convot = new Convot();
+        ConvotO convot = new ConvotO();
         convot.runConvot();
     }
 
@@ -15,13 +18,10 @@ class Convot {
         List<String> convs = new ArrayList<>();
         List<String> qs = new ArrayList<>();
         List<String> as = new ArrayList<>();
-        List<String> aas = new ArrayList<>();
         List<List<String>> read = new ArrayList<>();
         //
         try {
-            read = read();
-            convs = read.get(0);
-            aas = read.get(1);
+            convs = read();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,17 +29,7 @@ class Convot {
         List<List<String>> twoLists = decode(convs);
         qs = twoLists.get(0);
         as = twoLists.get(1);
-        //
-        twoLists = saidIWASFINE(as, qs, aas);
         //aas = alas(as);
-        as = twoLists.get(0);
-        qs = twoLists.get(1);
-        //
-        try {
-            write(encode(qs, as), aas);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         //
         String answer = "";
         //
@@ -60,8 +50,13 @@ class Convot {
                 answer = scanner.nextLine();
                 //
                 if (!answer.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit") && !answer.equals(qs.get(compare(qs, answer)))) {
-                    qs.add(answer);
+                    System.out.println("What's the answer?");
+                    scanner = new Scanner(System.in);
+                    String question = answer;
+                    answer = scanner.nextLine();
                     //
+                    as.add(answer);
+                    qs.add(question);
                 }else if(answer.equals(qs.get(compare(qs, answer)))){
                     System.out.println(as.get(compare(qs, answer)));
                 }
@@ -70,7 +65,7 @@ class Convot {
             convs = encode(qs, as);
             //
             try {
-                write(convs, aas);
+                write(convs);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -81,10 +76,21 @@ class Convot {
             String input = "";
             Integer c = 0;
             //
-            System.out.println(qs.get(0));
+            System.out.println("Ask me a question.");
             //
             Scanner scanner = new Scanner(System.in);
             input = scanner.nextLine();
+            //
+            c = compare(qs, input);
+            System.out.println(as.get(c));
+            //
+            scanner = new Scanner(System.in);
+            input = scanner.nextLine();
+            //
+            if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {//!quit?
+                qs.add(as.get(c));
+                as.add(input);
+            }
             //
             while(!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
                 //
@@ -92,28 +98,13 @@ class Convot {
                     c = compare(qs, input);//find answer
                     System.out.println(as.get(c));//print
                     //
-                    if (!(as.get(c).equals(qs.get(compare(qs, as.get(c)))))) {//answer != any question?
-                        //
-                        scanner = new Scanner(System.in);
-                        input = scanner.nextLine();//ask question
-                        //
-                        if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {//!quit?
-                            qs.add(as.get(c));
-                            as.add(input);
-                            //
-                            aas.add(input + "×" + (qs.size() - 1));
-                        }
-                    } else {//old question
-                        scanner = new Scanner(System.in);
-                        input = scanner.nextLine();
-                        //
-                        if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
-                            read = rewrite(as, aas, c, input);
-                            //
-                            as = read.get(0);
-                            aas = read.get(1);
-                        }
-                        //System.out.println("");
+                    //
+                    scanner = new Scanner(System.in);
+                    input = scanner.nextLine();//ask question
+                    //
+                    if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {//!quit?
+                        qs.add(as.get(c));
+                        as.add(input);
                     }
                     //
                 }
@@ -122,7 +113,7 @@ class Convot {
             convs = encode(qs, as);
             //
             try {
-                write(convs, aas);
+                write(convs);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -167,10 +158,9 @@ class Convot {
         //
     }
     //
-    public  List<List<String>> read() throws IOException {
-        List<List<String>> combined = new ArrayList<>();
+    public  List<String> read() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        URL filePath = classLoader.getResource("covs.txt");
+        URL filePath = classLoader.getResource("covsO.txt");
         File file = new File(filePath.getFile());
         BufferedReader br = new BufferedReader(new FileReader(file));
         List<String> covs = new ArrayList<>();
@@ -179,26 +169,16 @@ class Convot {
             covs.add(line);
             line = br.readLine();
         }
-        combined.add(covs);
         //
-        br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\aas.txt"));
-        List<String> aas = new ArrayList<>();
-        line = br.readLine();
-        while(line != null){
-            aas.add(line);
-            line = br.readLine();
-        }
-        combined.add(aas);
-        //
-        return combined;
+        return covs;
     }
     //
-    public void write(List<String> covs, List<String> aas) throws IOException {
+    public void write(List<String> covs) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        URL filePath = classLoader.getResource("covs.txt");
+        URL filePath = classLoader.getResource("covsO.txt");
         File file = new File(filePath.getFile());
         BufferedWriter thingThatWrites = new BufferedWriter(new FileWriter(file));
-        BufferedWriter backup = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\Backups\\covsB.txt"));
+        BufferedWriter backup = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\Backups\\covsOB.txt"));
         covs.forEach(string ->{
             try {
                 thingThatWrites.write(string);
@@ -213,20 +193,6 @@ class Convot {
         thingThatWrites.close();
         backup.flush();
         backup.close();
-        //
-        BufferedWriter thingThatWrites1 = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\aas.txt"));
-        aas.forEach(string ->{
-            try {
-                thingThatWrites1.write(string);
-                thingThatWrites1.newLine();
-            }   catch (IOException e){
-                e.printStackTrace();
-            }
-        });
-        //
-        System.out.println("File Saved!");
-        thingThatWrites1.flush();
-        thingThatWrites1.close();
     } //There are Backups!
     //
     public static List<List<String>> decode(List<String> covs){
@@ -318,105 +284,6 @@ class Convot {
         return (sort.get(0));
     }
     //
-    public static List<List<String>> rewrite(List<String> as, List<String> aas, Integer replace, String replacement){
-        List<List<String>> combined = new ArrayList<>();
-        List<String[]> both = new ArrayList<>();
-        //
-        //<editor-fold desc="Organize">
-        aas.add(replacement + "×" + replace);
-        String[] each;
-        //
-        for (int n = 0; n < aas.size(); n++){
-            each = aas.get(n).split("×");
-            both.add(each);//string, as #
-        }
-        //
-        List<String[]> alters = new ArrayList<>();//string, value, as #
-        //
-        for (int n = 0; n < both.size(); n++){//repeat # of aas
-            //<editor-fold desc="repeat?">
-            List<Integer> repeat = new ArrayList<>();
-            Boolean rp = false;
-            //
-            for (int c = 0; c < alters.size(); c++){//# of alters
-                if (alters.get(c)[0].equals(both.get(n)[0])){//string repeat?
-                    repeat.add(c);
-                }
-            }
-            //
-            for(int c = 0; c < repeat.size() - 1; c++){//# of repeats
-                if (alters.get(repeat.get(c))[2].equals(both.get(n)[1])){//question # repeat?
-                    rp = true;
-                }
-            }
-            //</editor-fold>//
-            //
-            if (rp){//if repeat aas
-                Integer a;
-                //
-                for (a = 0; !alters.get(a)[0].equals(both.get(n)[0]); a++){}//repeat until current aas
-                //
-                String[] use = new String[]{alters.get(a)[0], Integer.toString(Integer.parseInt(alters.get(a)[1]) + 1), alters.get(a)[2]};
-                alters.set(a, use);
-                //
-            }else {//if new aas
-                String num = "0";
-                String[] use = new String[]{both.get(n)[0], num, both.get(n)[1]};
-                alters.add(use);
-                //
-            }
-        }
-        //</editor-fold>
-        //
-        List<List<String[]>> sorted = new ArrayList<>();
-        List<Integer> key = new ArrayList<>();
-        //
-        List<String[]> temp = new ArrayList<>();
-        //
-        temp.add(alters.get(0));
-        sorted.add(temp);
-        key.add(Integer.parseInt(alters.get(0)[2]));
-        //
-        for (int a = 1; a < alters.size(); a++) {//# of alters
-            Integer b;
-            Integer ua = Integer.parseInt(alters.get(a)[2]);
-            //
-            if (key.contains(ua)){
-                //
-                Integer d;
-                for (d = 0; !key.get(d).equals(ua); d++){}
-                //
-                temp = sorted.get(d);
-                //
-                for (b = 0; b < (sorted.size()) && isaBoolean(alters, temp, a, b); b++){}//# of sorted or temp v > alters v
-                //
-                temp.add(b, alters.get(a));
-                sorted.add(temp);
-                key.add(ua);
-                //
-            }else{
-                temp.clear();
-                //
-                temp.add(alters.get(a));
-                sorted.add(temp);
-                key.add(ua);
-            }
-            //
-        }
-        //
-        Integer d;
-        for (d = 0; !key.get(d).equals(replace); d++){}
-        temp = sorted.get(d);
-        //
-        if(temp.get(0)[0] != as.get(replace)){
-            as.set(replace, temp.get(0)[0]);
-        }
-        //
-        combined.add(as);
-        combined.add(aas);
-        //
-        return combined;
-    }
 
     private static boolean isaBoolean(List<String[]> alters, List<String[]> sorted, int a, Integer b) {
         Integer valueOne = Integer.parseInt(alters.get(a)[1]);
@@ -447,38 +314,5 @@ class Convot {
                 qs.set(n, temp);
             }
         }
-    }
-    //
-    private static List<String> alas(List<String> as){
-        List<String> aas = new ArrayList<>();
-        //
-        for (int n = 0; n < as.size(); n++){
-            aas.add(as.get(n) + "×" + n);
-        }
-        //
-        return aas;
-    }
-    //
-    private static List<List<String>> saidIWASFINE(List<String> as, List<String> qs, List<String> aas){
-        for (int n = 0; n < as.size(); n++){
-            if (as.get(n).equals("Said I was fine.")){
-                as.remove(n);
-                qs.remove(n);
-            }
-        }
-        //
-        for (int n = 0; n < aas.size(); n++){
-            String aasr = aas.get(n).split("×")[0];
-            if (aasr.equals("Said I was fine.")){
-                aas.remove(n);
-            }
-        }
-        //
-        List<List<String>> both = new ArrayList<>();
-        both.add(as);
-        both.add(qs);
-        both.add(aas);
-        //
-        return both;
     }
 }

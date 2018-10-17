@@ -2,10 +2,10 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-class Convot {
+class Convot1 {
     //
     public static void main(String args[]) {
-        Convot convot = new Convot();
+        Convot1 convot = new Convot1();
         convot.runConvot();
     }
 
@@ -43,11 +43,11 @@ class Convot {
         //
         String answer = "";
         //
-        System.out.println("t to train, c to talk, and w to watch two robots talk.");
-        while(!answer.equals("t") && !answer.equals("c") && !answer.equals("w")) {
+        System.out.println("t to train, c to talk, r to reset, and w to watch two robots talk.");
+        while(!answer.equals("t") && !answer.equals("c") && !answer.equals("w") && !answer.equals("r")) {
             Scanner scanner = new Scanner(System.in);
             answer = scanner.nextLine();
-            if (!answer.equals("t") && !answer.equals("c") && !answer.equals("w")){
+            if (!answer.equals("t") && !answer.equals("c") && !answer.equals("w") && !answer.equals("r")){
                 System.out.println("That's not a valid command.");
             }
         }
@@ -60,7 +60,14 @@ class Convot {
                 answer = scanner.nextLine();
                 //
                 if (!answer.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit") && !answer.equals(qs.get(compare(qs, answer)))) {
-                    qs.add(answer);
+                    System.out.println("What's the answer?");
+                    scanner = new Scanner(System.in);
+                    String question = answer;
+                    answer = scanner.nextLine();
+                    //
+                    qs.add(question);
+                    as.add(answer);
+                    aas.add(answer + "×" + (qs.size() - 1));
                     //
                 }else if(answer.equals(qs.get(compare(qs, answer)))){
                     System.out.println(as.get(compare(qs, answer)));
@@ -86,36 +93,55 @@ class Convot {
             Scanner scanner = new Scanner(System.in);
             input = scanner.nextLine();
             //
+            read = rewrite(as, aas, c, input);
+            //
+            as = read.get(0);
+            aas = read.get(1);
+            //
             while(!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
                 //
                 if(!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {//quit?
                     c = compare(qs, input);//find answer
-                    System.out.println(as.get(c));//print
-                    //
-                    if (!(as.get(c).equals(qs.get(compare(qs, as.get(c)))))) {//answer != any question?
+                    if (c == -1){
+                        System.out.println("What's that mean?");
+                        //
+                        String input1 = input;
                         //
                         scanner = new Scanner(System.in);
                         input = scanner.nextLine();//ask question
                         //
-                        if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {//!quit?
-                            qs.add(as.get(c));
-                            as.add(input);
-                            //
-                            aas.add(input + "×" + (qs.size() - 1));
-                        }
-                    } else {//old question
-                        scanner = new Scanner(System.in);
-                        input = scanner.nextLine();
+                        qs.add(input1);
+                        as.add(input);
+                        aas.add(input + "×" + (qs.size() - 1));
                         //
-                        if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
-                            read = rewrite(as, aas, c, input);
+                    }else {
+                        System.out.println(as.get(c));//print
+                        //
+                        if (!(as.get(c).equals(qs.get(compare(qs, as.get(c)))))) {//answer != any question?
                             //
-                            as = read.get(0);
-                            aas = read.get(1);
+                            scanner = new Scanner(System.in);
+                            input = scanner.nextLine();//ask question
+                            //
+                            if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {//!quit?
+                                qs.add(as.get(c));
+                                as.add(input);
+                                //
+                                aas.add(input + "×" + (qs.size() - 1));
+                            }
+                        } else {//old question
+                            scanner = new Scanner(System.in);
+                            input = scanner.nextLine();
+                            //
+                            if (!input.toLowerCase().replaceAll("[^a-zA-Z ]", "").equals("quit")) {
+                                read = rewrite(as, aas, c, input);
+                                //
+                                as = read.get(0);
+                                aas = read.get(1);
+                            }
+                            //System.out.println("");
                         }
-                        //System.out.println("");
+                        //
                     }
-                    //
                 }
             }
             //
@@ -140,11 +166,19 @@ class Convot {
             System.out.println("c1: " + c1);
             //
             for (int n = 0; n < 500; n++){
-                c2 = as.get(compare(qs, c1));
+                if (compare(qs, c1) == -1){
+                    c2 = as.get(r.nextInt(as.size() + 1));
+                }else {
+                    c2 = as.get(compare(qs, c1));
+                }
                 System.out.println("c2: " + c2);
                 sleep(3000);
                 //
-                c1 = as.get(compare(qs, c2));
+                if (compare(qs, c2) == -1){
+                    c1 = as.get(r.nextInt(as.size() + 1));
+                }else {
+                    c1 = as.get(compare(qs, c2));
+                }
                 //
                 for (int a = 0; a < record.size(); a++){
                     if (record.get(a).equals(c1)){
@@ -164,13 +198,27 @@ class Convot {
             }
         }
         //</editor-fold>
+        else if (answer.equals("r")){
+            as.clear();
+            qs.clear();
+            aas.clear();
+            as.add("Good.");
+            qs.add("How are you?");
+            aas.add("Good.×0");
+            try {
+                write(encode(qs, as),aas);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         //
     }
     //
     public  List<List<String>> read() throws IOException {
+        //
         List<List<String>> combined = new ArrayList<>();
         ClassLoader classLoader = getClass().getClassLoader();
-        URL filePath = classLoader.getResource("covs.txt");
+        URL filePath = classLoader.getResource("covs2.txt");
         File file = new File(filePath.getFile());
         BufferedReader br = new BufferedReader(new FileReader(file));
         List<String> covs = new ArrayList<>();
@@ -181,7 +229,7 @@ class Convot {
         }
         combined.add(covs);
         //
-        br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\aas.txt"));
+        br = new BufferedReader(new FileReader("C:\\Users\\Eric\\Documents\\CodingTest\\aas2.txt"));
         List<String> aas = new ArrayList<>();
         line = br.readLine();
         while(line != null){
@@ -195,10 +243,10 @@ class Convot {
     //
     public void write(List<String> covs, List<String> aas) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        URL filePath = classLoader.getResource("covs.txt");
+        URL filePath = classLoader.getResource("covs2.txt");
         File file = new File(filePath.getFile());
         BufferedWriter thingThatWrites = new BufferedWriter(new FileWriter(file));
-        BufferedWriter backup = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\Backups\\covsB.txt"));
+        BufferedWriter backup = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\Backups\\covsB2.txt"));
         covs.forEach(string ->{
             try {
                 thingThatWrites.write(string);
@@ -214,7 +262,7 @@ class Convot {
         backup.flush();
         backup.close();
         //
-        BufferedWriter thingThatWrites1 = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\aas.txt"));
+        BufferedWriter thingThatWrites1 = new BufferedWriter(new FileWriter("C:\\Users\\Eric\\Documents\\CodingTest\\aas2.txt"));
         aas.forEach(string ->{
             try {
                 thingThatWrites1.write(string);
@@ -270,7 +318,7 @@ class Convot {
         List<String> compare = new ArrayList<>();
         String[] a = new String[0];
         //
-        a = (item.toLowerCase().replaceAll("[^a-zA-Z ]", "").split("\\s+"));
+        a = (item.toLowerCase().replaceAll("[^a-zA-Z0-9' ]", "").split("\\s+"));
         for(String word :a){ //this is another type of loop statement that will go through every item in your array, designating the item 'word' and performing the task you need to with it
             compare.add(word);
         }
@@ -280,13 +328,8 @@ class Convot {
             List<String> q = new ArrayList<>();
             String[] s = new String[0];
             //
-            Integer nm = 0;
-            Integer nmb = 0;
-            //
-            s = (qs.get(n).toLowerCase().replaceAll("[^a-zA-Z ]", "").split("\\s+"));
-            for(String word :s){ //this is another type of loop statement that will go through every item in your array, designating the item 'word' and performing the task you need to with it
-                q.add(word);
-            }
+            s = (qs.get(n).toLowerCase().replaceAll("[^a-zA-Z0-9' ]", "").split("\\s+"));
+            Collections.addAll(q, s);
             //
             bqs.add(q);
         }
@@ -296,31 +339,58 @@ class Convot {
         List<Integer> value = new ArrayList<>();
         List<Integer> sort = new ArrayList<>();
         //
-        for(int n = 0; n < bqs.size(); n++){//line
+        boolean good = false;
+        //
+        for(int n = 0; n < bqs.size(); n++){
             //
-            int val = 0;
-            for (int b = 0; b < compare.size(); b++){//word
-                if ((bqs.get(n).contains(compare.get(b)))){
-                    val++;
+            int words = 0;
+            int chara = 0;
+            int charm = 0;
+            int charo = 0;
+            boolean bonus = false;
+            //
+            for (String word:compare) {//initial compare
+                if ((bqs.get(n).contains(word))){
+                    words++;
+                    chara += word.length();
+                    good = true;
+                    bonus = true;
+                }else{
+                    //charm += compare.get(b).length();
                 }
             }
-            if(qs.get(n) == item){
-                val =+ 10;
+            //
+            for (String word:bqs.get(n)){//compare others
+                if (!compare.contains(word)){
+                    charo += word.length();
+                }
             }
             //
-            value.add(val);
+            chara *= words;
+            chara -= charm;
+            chara -= charo;
+            //
+            if (bonus){
+                chara += 30;
+            }
+            //
+            value.add(chara);
             int b = 0;
-            for (b = 0;b < sort.size() &&  val < value.get(sort.get(b)); b++){}//find value order
+            for (b = 0;b < sort.size() &&  chara < value.get(sort.get(b)); b++){}
             sort.add(b, n);
         }
         //</editor-fold>
         //
-        return (sort.get(0));
+        if (good) {
+            return (sort.get(0));
+        }else{
+            return -1;
+        }
     }
     //
     public static List<List<String>> rewrite(List<String> as, List<String> aas, Integer replace, String replacement){
         List<List<String>> combined = new ArrayList<>();
-        List<String[]> both = new ArrayList<>();
+        List<String[]> both = new ArrayList<>();//string, as #
         //
         //<editor-fold desc="Organize">
         aas.add(replacement + "×" + replace);
@@ -332,84 +402,61 @@ class Convot {
         }
         //
         List<String[]> alters = new ArrayList<>();//string, value, as #
+        List<Integer> key = new ArrayList<>();//
+        List<List<String[]>> questions = new ArrayList<>();//questions<alters<string, value>>
         //
-        for (int n = 0; n < both.size(); n++){//repeat # of aas
-            //<editor-fold desc="repeat?">
-            List<Integer> repeat = new ArrayList<>();
-            Boolean rp = false;
+        while (both.size() > 0){//organize alters in question list
             //
-            for (int c = 0; c < alters.size(); c++){//# of alters
-                if (alters.get(c)[0].equals(both.get(n)[0])){//string repeat?
-                    repeat.add(c);
+            if (key.contains(Integer.parseInt(both.get(0)[1]))){//is there a list for current question?
+                int list;
+                for (list = 0; !Integer.toString(list).equals(both.get(0)[1]); list++){}//look for  list
+                //
+                int alter;
+                for (alter = 0; alter < questions.get(list).size() && !questions.get(list).get(alter)[0].equals((both.get(0))[0]); alter++){}
+                // /\--Check if one question has an identical alter
+                //
+                if (alter != questions.get(list).size()){//found identical
+                    //
+                    String[] atler = new String[]{both.get(0)[0], Integer.toString(Integer.parseInt(questions.get(list).get(alter)[1]) + 1)};
+                    //
+                    questions.get(list).set(alter, atler);//set alter of question to itself with value + 1
+                }else {//new alter
+                    //
+                    String[] atler = new String[]{both.get(0)[0], "1"};
+                    //
+                    questions.get(list).add(atler);//add new alter to question
                 }
-            }
-            //
-            for(int c = 0; c < repeat.size() - 1; c++){//# of repeats
-                if (alters.get(repeat.get(c))[2].equals(both.get(n)[1])){//question # repeat?
-                    rp = true;
-                }
-            }
-            //</editor-fold>//
-            //
-            if (rp){//if repeat aas
-                Integer a;
                 //
-                for (a = 0; !alters.get(a)[0].equals(both.get(n)[0]); a++){}//repeat until current aas
+                both.remove(0);
                 //
-                String[] use = new String[]{alters.get(a)[0], Integer.toString(Integer.parseInt(alters.get(a)[1]) + 1), alters.get(a)[2]};
-                alters.set(a, use);
+            }else{//new question
                 //
-            }else {//if new aas
-                String num = "0";
-                String[] use = new String[]{both.get(n)[0], num, both.get(n)[1]};
-                alters.add(use);
+                String[] atler = new String[]{both.get(0)[0], "1"};
+                List<String[]> question = new ArrayList<>();
+                question.add(atler);
                 //
+                questions.add(question);
+                key.add(Integer.parseInt(both.get(0)[1]));
+                //
+                both.remove(0);
             }
         }
         //</editor-fold>
         //
-        List<List<String[]>> sorted = new ArrayList<>();
-        List<Integer> key = new ArrayList<>();
-        //
-        List<String[]> temp = new ArrayList<>();
-        //
-        temp.add(alters.get(0));
-        sorted.add(temp);
-        key.add(Integer.parseInt(alters.get(0)[2]));
-        //
-        for (int a = 1; a < alters.size(); a++) {//# of alters
-            Integer b;
-            Integer ua = Integer.parseInt(alters.get(a)[2]);
+        for (int a = 0; a < questions.size(); a++){//sort each question
             //
-            if (key.contains(ua)){
-                //
-                Integer d;
-                for (d = 0; !key.get(d).equals(ua); d++){}
-                //
-                temp = sorted.get(d);
-                //
-                for (b = 0; b < (sorted.size()) && isaBoolean(alters, temp, a, b); b++){}//# of sorted or temp v > alters v
-                //
-                temp.add(b, alters.get(a));
-                sorted.add(temp);
-                key.add(ua);
-                //
-            }else{
-                temp.clear();
-                //
-                temp.add(alters.get(a));
-                sorted.add(temp);
-                key.add(ua);
+            Collections.sort(questions.get(a), new Comparator<String[]>() {//sort each question by value
+                public int compare(String[] s1, String s2[]) {
+                    int i1 = Integer.parseInt(s1[1]);
+                    int i2 = Integer.parseInt(s2[1]);
+                    return Integer.compare(i2, i1);
+                }
+            });
+            //
+            if (!questions.get(a).get(0)[0].equals(as.get(key.get(a)))){//answer has changed
+                as.set(key.get(a), questions.get(a).get(0)[0]);//update answer
             }
             //
-        }
-        //
-        Integer d;
-        for (d = 0; !key.get(d).equals(replace); d++){}
-        temp = sorted.get(d);
-        //
-        if(temp.get(0)[0] != as.get(replace)){
-            as.set(replace, temp.get(0)[0]);
         }
         //
         combined.add(as);
